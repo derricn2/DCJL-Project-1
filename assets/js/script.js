@@ -17,12 +17,12 @@ function searchMovies(searchTerm) {
         .then(data => {
         if (data.Response === "True") {
             //searching for the first 10 movies
-            var movies = data.Search.slice(0, 10);
+            var movies = data.Search.slice(0, 5);
   
             var movieList = document.querySelector('.movie-list');
             movieList.innerHTML = '';
             movies.forEach(movie => {
-            const card = createMovieCard(movie);
+            var card = createMovieCard(movie);
             movieList.appendChild(card);
         });
         } else {
@@ -39,16 +39,17 @@ function createMovieCard(movie) {
 
     var card = document.createElement('div');
     card.classList.add('movie-card');
-  
-    var title = document.createElement('h3');
-    title.textContent = movie.Title;
-  
-    var year = document.createElement('p');
-    year.textContent = `Year: ${movie.Year}`;
-  
+
     var poster = document.createElement('img');
     poster.src = movie.Poster;
     poster.alt = movie.Title;
+  
+    var title = document.createElement('h3');
+    title.classList.add('text-lg');
+    title.textContent = movie.Title;
+  
+    var year = document.createElement('p');
+    year.textContent = `${movie.Year}`;
   
     card.appendChild(title);
     card.appendChild(year);
