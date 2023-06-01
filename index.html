@@ -7,6 +7,17 @@
     <title>DCJL Project 1</title>
     <link rel="stylesheet" href="./assets/css/style.css"/>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                clifford: '#da373d',
+              }
+            }
+          }
+        }
+      </script>
 </head>
 <body>
 
@@ -16,6 +27,12 @@
             <input type="text" id="search-bar" placeholder="Search movies..." name="search">
             <button type="submit">&#128269;</button>
     </header>
+
+    <div class="flex justify-between ...">
+        <div>01</div>
+        <div>02</div>
+        <div>03</div>
+      </div>
 
     <div class="sidebar">
         <h2>Selected Movie List:</h2>
