@@ -50,10 +50,36 @@ function createMovieCard(movie) {
   
     var year = document.createElement('p');
     year.textContent = `${movie.Year}`;
+
+    var addButton = document.createElement('button');
+    addButton.textContent = 'Add to List';
+
+    addButton.addEventListener('click', function () {
+        addMovieToList(movie.Title);
+    });
   
     card.appendChild(title);
     card.appendChild(year);
     card.appendChild(poster);
+    card.appendChild(addButton);
   
     return card;
 }
+
+function addMovieToList(title) {
+    var selectedList = document.querySelector('.selected-list');
+    var movieTitles = selectedList.querySelectorAll('li');
+
+    var isMovieAlreadyAdded = Array.from(movieTitles).some(function (movie) {
+        return movie.textContent === title;
+    });
+    
+    if (isMovieAlreadyAdded) {
+        console.log('Movie is already added to the list.');
+        return;
+    }
+    var listItem = document.createElement('li');
+    listItem.textContent = title;
+    
+    selectedList.appendChild(listItem);
+  }
