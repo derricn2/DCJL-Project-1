@@ -65,15 +65,17 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    margin: 10px;
 }
   
 .movie-card {
     width: 20%;
     margin-bottom: 10px;
-    background-color: grey;
+    background-color: #27374D;
+    color: #9DB2BF;
     padding: 10px;
     box-sizing: border-box;
-    border-radius: 5px;
-    border: solid black;
+    border-radius: 8px;
+    border: 1px solid black;
     text-align: center;
 }
