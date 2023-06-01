@@ -69,11 +69,12 @@ body {
   
 .movie-card {
     width: 20%;
-    margin-bottom: 20px;
-    background-color: grey;
+    margin-bottom: 10px;
+    background-color: #27374D;
     padding: 10px;
     box-sizing: border-box;
     border-radius: 5px;
     border: solid black;
     text-align: center;
+    color: #9DB2BF;
 }
