@@ -38,7 +38,7 @@ function searchMovies(searchTerm) {
 function createMovieCard(movie) {
 
     var card = document.createElement('div');
-    card.classList.add('movie-card');
+    card.classList.add('movie-card', 'w-1/5', 'bg-[#27374D]', 'text-[#9DB2BF]', 'p-4', 'box-border', 'border', 'border-black', 'rounded-md', 'text-center');
 
     var poster = document.createElement('img');
     poster.src = movie.Poster;
@@ -53,6 +53,7 @@ function createMovieCard(movie) {
 
     var addButton = document.createElement('button');
     addButton.textContent = 'Add to List';
+    addButton.classList.add('btn-add', 'px-4', 'py-2', 'bg-[#27374D]','rounded-md', 'hover:bg-[#DDE6ED]');
 
     addButton.addEventListener('click', function () {
         addMovieToList(movie.Title);
