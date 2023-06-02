@@ -24,7 +24,7 @@ body {
 }
 
 .sidebar {
-    width: 250px;
+    width: 400px;
     background-color: #27374D;
     padding: 20px;
     color: #9DB2BF;
@@ -44,7 +44,11 @@ body {
 }
 
 .sidebar li {
-    margin-bottom: 10px;
+    margin-top: 10px;
+    border: 1px solid black;
+    border-radius: 8px;
+    background-color: #9DB2BF;
+    color: black;
 }
 
 .sidebar a {
@@ -68,14 +72,3 @@ body {
     margin: 10px;
 }
   
-.movie-card {
-    width: 20%;
-    margin-bottom: 10px;
-    background-color: #27374D;
-    color: #9DB2BF;
-    padding: 10px;
-    box-sizing: border-box;
-    border-radius: 8px;
-    border: 1px solid black;
-    text-align: center;
-}
