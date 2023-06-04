@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="./assets/css/style.css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="body bg-[#DDE6ED] m-0">
 
-    <header class="header">
-        <h1 class="webpage-title">DCJL Project 1</h1>
-        <form class="search-form" action="#" method="get">
+    <header class="header flex items-center justify-between bg-[#27374D] text-[#9DB2BF] border border-black rounded-lg m-3">
+        <h1 class="webpage-title ml-4">DCJL Project 1</h1>
+        <form class="search-form mr-4" action="#" method="get">
         <input type="text" id="search-bar" placeholder="Search movies..." name="search" class="p-2">
         </form>
     </header>
@@ -20,7 +20,7 @@
     <!-- NEED to update this for the proper styling, just testing functionality. -->
 <div class="flex justify-start">
 
-    <div class="sidebar">
+    <div class="sidebar p-4 border border-black rounded-lg bg-[#27374D] text-[#9DB2BF] ml-3 mr-3 mb-3">
         <h2>Selected Movie List:</h2>
         <ul class="selected-list"></ul>
     </div>
