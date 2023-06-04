@@ -20,6 +20,7 @@ function searchMovies(searchTerm) {
             var movies = data.Search.slice(0, 5);
   
             var movieList = document.querySelector('.movie-list');
+            movieList.classList.add('flex')
             movieList.innerHTML = '';
             movies.forEach(movie => {
             var card = createMovieCard(movie);
@@ -38,12 +39,7 @@ function searchMovies(searchTerm) {
 function createMovieCard(movie) {
 
     var card = document.createElement('div');
-    card.classList.add('movie-card', 'w-1/5', 'bg-[#27374D]', 'text-[#9DB2BF]', 'p-4', 'box-border', 'border', 'border-black', 'rounded-md', 'text-center', 'relative', 'mr-2');
-
-    var poster = document.createElement('img');
-    poster.classList.add('mx-auto', 'relative', 'w-full', 'h-auto');
-    poster.src = movie.Poster;
-    poster.alt = movie.Title;
+    card.classList.add('movie-card', 'w-1/5', 'bg-[#27374D]', 'text-[#9DB2BF]', 'p-4', 'box-border', 'border', 'border-black', 'rounded-md', 'text-center', 'relative', 'mr-1', 'mb-3', 'flex', 'flex-col');
   
     var title = document.createElement('h3');
     title.classList.add('text-lg');
@@ -53,15 +49,20 @@ function createMovieCard(movie) {
     year.classList.add('mb-3');
     year.textContent = `${movie.Year}`;
 
+    var poster = document.createElement('img');
+    poster.classList.add('relative', 'w-full', 'h-auto', 'items-center');
+    poster.src = movie.Poster;
+    poster.alt = movie.Title;
+
     var addButton = document.createElement('button');
     addButton.textContent = 'Add to List';
     addButton.classList.add('btn-add', 'px-2', 'py-2', 'bg-[#9DB2BF]', 'rounded-md', 'hover:bg-[#DDE6ED]', 'box-border', 'border', 'border-black', 'bottom-2', 'left-1/2', 'transform', '-translate-x-1/2', 'translate-y-1/2', 'relative', 'bottom-0', 'w-full');
     addButton.style.color = '#27374D';
 
     addButton.addEventListener('click', function () {
-        addMovieToList(movie.Title);
+        addMovieToList(movie.Title, movie.Year);
     });
-  
+
     card.appendChild(title);
     card.appendChild(year);
     card.appendChild(poster);
@@ -70,7 +71,7 @@ function createMovieCard(movie) {
     return card;
 }
 
-function addMovieToList(title) {
+function addMovieToList(title, year) {
     var selectedList = document.querySelector('.selected-list');
     var movieTitles = selectedList.querySelectorAll('li');
 
@@ -84,8 +85,32 @@ function addMovieToList(title) {
     }
     var listItem = document.createElement('li');
     listItem.textContent = title;
-    listItem.classList.add('hover:bg-[#DDE6ED]', 'hover:cursor-pointer')
+    listItem.classList.add('flex', 'items-center', 'justify-between', 'bg-[#9DB2BF]', 'hover:bg-[#DDE6ED]', 'hover:cursor-pointer', 'mt-1', 'border', 'border-black', 'rounded-lg')
     listItem.style.color = '#27374D';
+
+    var movieInfo = document.createElement('div');
+    movieInfo.classList.add('flex', 'items-center', 'w-full');
+  
+    var yearElement = document.createElement('span');
+    yearElement.textContent = year;
+    yearElement.classList.add('ml-auto');
+  
+    movieInfo.appendChild(yearElement);
+  
+    listItem.appendChild(movieInfo);
+
+    var removeButton = document.createElement('xButton');
+    removeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>`;
+  
+    removeButton.classList.add('text-[#27374D]');
+
+    removeButton.addEventListener('click', function(){
+        listItem.remove();
+    });
+
+    listItem.appendChild(removeButton);
     
     selectedList.appendChild(listItem);
   }
