@@ -110,6 +110,10 @@ function addMovieToList(title, year) {
         listItem.remove();
     });
 
+    listItem.addEventListener('click', function (){
+        window.location.href = 'sindex.html';
+    });
+
     listItem.appendChild(removeButton);
 
     selectedList.appendChild(listItem);
