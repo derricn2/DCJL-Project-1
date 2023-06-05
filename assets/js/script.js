@@ -15,24 +15,24 @@ function searchMovies(searchTerm) {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-        if (data.Response === "True") {
-            //searching for the first 10 movies
-            var movies = data.Search.slice(0, 5);
-  
-            var movieList = document.querySelector('.movie-list');
-            movieList.classList.add('flex')
-            movieList.innerHTML = '';
-            movies.forEach(movie => {
-            var card = createMovieCard(movie);
-            movieList.appendChild(card);
+            if (data.Response === "True") {
+                //searching for the first 10 movies
+                var movies = data.Search.slice(0, 5);
+
+                var movieList = document.querySelector('.movie-list');
+                movieList.classList.add('flex')
+                movieList.innerHTML = '';
+                movies.forEach(movie => {
+                    var card = createMovieCard(movie);
+                    movieList.appendChild(card);
+                });
+            } else {
+                console.log('No movies found.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
-        } else {
-          console.log('No movies found.');
-        }
-    })
-    .catch(error => {
-    console.error('Error:', error);
-    });
 }
 
 
@@ -40,11 +40,11 @@ function createMovieCard(movie) {
 
     var card = document.createElement('div');
     card.classList.add('movie-card', 'w-1/5', 'bg-[#27374D]', 'text-[#9DB2BF]', 'p-4', 'box-border', 'border', 'border-black', 'rounded-md', 'text-center', 'relative', 'mr-1', 'mb-3', 'flex', 'flex-col');
-  
+
     var title = document.createElement('h3');
     title.classList.add('text-lg');
     title.textContent = movie.Title;
-  
+
     var year = document.createElement('p');
     year.classList.add('mb-3');
     year.textContent = `${movie.Year}`;
@@ -67,7 +67,7 @@ function createMovieCard(movie) {
     card.appendChild(year);
     card.appendChild(poster);
     card.appendChild(addButton);
-  
+
     return card;
 }
 
@@ -78,7 +78,7 @@ function addMovieToList(title, year) {
     var isMovieAlreadyAdded = Array.from(movieTitles).some(function (movie) {
         return movie.textContent === title;
     });
-    
+
     if (isMovieAlreadyAdded) {
         console.log('Movie is already added to the list.');
         return;
@@ -90,27 +90,61 @@ function addMovieToList(title, year) {
 
     var movieInfo = document.createElement('div');
     movieInfo.classList.add('flex', 'items-center', 'w-full');
-  
+
     var yearElement = document.createElement('span');
     yearElement.textContent = year;
     yearElement.classList.add('ml-auto');
-  
+
     movieInfo.appendChild(yearElement);
-  
+
     listItem.appendChild(movieInfo);
 
     var removeButton = document.createElement('xButton');
     removeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
     </svg>`;
-  
+
     removeButton.classList.add('text-[#27374D]');
 
-    removeButton.addEventListener('click', function(){
+    removeButton.addEventListener('click', function () {
         listItem.remove();
     });
 
     listItem.appendChild(removeButton);
-    
+
     selectedList.appendChild(listItem);
-  }
+}
+//new york times api for reviews on next page
+    var apiKey = 'plnHoeZOcwLFaJBwAuUoAd7wHUCKGLA2';
+    var Url = 'https://api.nytimes.com/svc/movies/v2/reviews/all.json?api-key=${apiKey}';
+
+    fetch(Url)
+    .then (response => response.json())
+    .then (data => {
+
+        console.log(data);
+
+    var reviews = data.results;
+    
+    // Loop through each
+    reviews.forEach(review => {
+      var card = document.createElement('div');
+      card.classList.add('card-item');
+
+      var title = document.createElement('h2');
+      title.textContent = review.display_title;
+      card.appendChild(title);
+
+      var summary = document.createElement('p');
+      summary.textContent = review.summary_short;
+      card.appendChild(summary);
+
+      cardElement.appendChild(card);
+    });
+})
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+
+
