@@ -28,3 +28,13 @@ body {
   text-align: center;
   cursor: pointer;
   }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #27374D;  
+    color: #9DB2BF;
+    border: 1px solid black;
+    border-radius: 8px;
+    margin: 10px;
+}
