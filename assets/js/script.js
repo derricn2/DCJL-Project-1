@@ -115,8 +115,10 @@ function addMovieToList(title, year) {
     selectedList.appendChild(listItem);
 }
 //new york times api for reviews on next page
-    var apiKey = 'plnHoeZOcwLFaJBwAuUoAd7wHUCKGLA2';
-    var Url = 'https://api.nytimes.com/svc/movies/v2/reviews/all.json?api-key=${apiKey}';
+  
+    var Url = 'https://api.nytimes.com/svc/movies/v2/reviews/all.json?api-key=plnHoeZOcwLFaJBwAuUoAd7wHUCKGLA2';
+
+    var cardElement = document.querySelector('.card');
 
     fetch(Url)
     .then (response => response.json())
@@ -138,6 +140,11 @@ function addMovieToList(title, year) {
       var summary = document.createElement('p');
       summary.textContent = review.summary_short;
       card.appendChild(summary);
+
+      var poster = document.createElement('img');
+      poster.src = review.multimedia.src;
+      poster.alt = review.display_title;
+      card.appendChild(poster);
 
       cardElement.appendChild(card);
     });
