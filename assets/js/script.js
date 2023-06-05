@@ -91,12 +91,6 @@ function addMovieToList(title, year) {
     var movieInfo = document.createElement('div');
     movieInfo.classList.add('flex', 'items-center', 'w-full');
 
-    var yearElement = document.createElement('span');
-    yearElement.textContent = year;
-    yearElement.classList.add('ml-auto');
-
-    movieInfo.appendChild(yearElement);
-
     listItem.appendChild(movieInfo);
 
     var removeButton = document.createElement('xButton');
@@ -107,6 +101,7 @@ function addMovieToList(title, year) {
     removeButton.classList.add('text-[#27374D]');
 
     removeButton.addEventListener('click', function () {
+        event.stopPropagation();
         listItem.remove();
         removeFromMovieList();
     });
@@ -213,6 +208,7 @@ function populateMovieList() {
         removeButton.classList.add('text-[#27374D]');
   
         removeButton.addEventListener('click', function () {
+            event.stopPropagation();
             listItem.remove();
             removeFromMovieList();
         });
