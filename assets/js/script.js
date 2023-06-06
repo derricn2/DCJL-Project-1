@@ -91,12 +91,6 @@ function addMovieToList(title, year) {
     var movieInfo = document.createElement('div');
     movieInfo.classList.add('flex', 'items-center', 'w-full');
 
-    var yearElement = document.createElement('span');
-    yearElement.textContent = year;
-    yearElement.classList.add('ml-auto');
-
-    movieInfo.appendChild(yearElement);
-
     listItem.appendChild(movieInfo);
 
     var removeButton = document.createElement('xButton');
@@ -107,7 +101,9 @@ function addMovieToList(title, year) {
     removeButton.classList.add('text-[#27374D]');
 
     removeButton.addEventListener('click', function () {
+        event.stopPropagation();
         listItem.remove();
+        removeFromMovieList();
     });
 
     listItem.addEventListener('click', function (){
@@ -118,43 +114,113 @@ function addMovieToList(title, year) {
 
     selectedList.appendChild(listItem);
 
+    saveMovieList();
 }
 //new york times api for reviews on next page
+  
+    var Url = 'https://api.nytimes.com/svc/movies/v2/reviews/all.json?api-key=plnHoeZOcwLFaJBwAuUoAd7wHUCKGLA2';
 
-var urlParams = new URLSearchParams(window.location.search);
-var movieID = urlParams.get('id');
-var cardElement = document.querySelector('.card');
+    var cardElement = document.querySelector('.card');
 
-fetch('https://api.nytimes.com/svc/movies/v2/reviews/all.json?api-key=plnHoeZOcwLFaJBwAuUoAd7wHUCKGLA2')
-    .then(response => response.json())
-    .then(data => {
-        var reviews = data.results;
+    fetch(Url)
+    .then (response => response.json())
+    .then (data => {
 
-    var selectedReview = reviews.find(review => review.display_title === movieID);
+        console.log(data);
 
-    if (selectedReview) {
-      // movie info
+    var reviews = data.results;
+    
+    // Loop through each
+    reviews.forEach(review => {
       var card = document.createElement('div');
       card.classList.add('card-item');
 
       var title = document.createElement('h2');
-      title.textContent = selectedReview.display_title;
+      title.textContent = review.display_title;
       card.appendChild(title);
 
       var summary = document.createElement('p');
-      summary.textContent = selectedReview.summary_short;
+      summary.textContent = review.summary_short;
       card.appendChild(summary);
 
       var poster = document.createElement('img');
-      poster.src = selectedReview.multimedia.src;
-      poster.alt = selectedReview.display_title;
+      poster.src = review.multimedia.src;
+      poster.alt = review.display_title;
       card.appendChild(poster);
 
       cardElement.appendChild(card);
-    } else {
-      console.log('Review not found.');
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+    });
+})
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+    
+function saveMovieList() {
+    var selectedList = document.querySelector('.selected-list');
+    var movieTitles = selectedList.querySelectorAll('li');
+      
+    var movieList = Array.from(movieTitles).map(function (movie) {
+      return movie.textContent;
+    });
+      
+    localStorage.setItem('movie-list', JSON.stringify(movieList));
+}
+
+function removeFromMovieList() {
+    var selectedList = document.querySelector('.selected-list');
+    var movieTitles = selectedList.querySelectorAll('li');
+  
+    var movieList = Array.from(movieTitles).map(function (movie) {
+      return movie.textContent;
+    });
+  
+    localStorage.setItem('movie-list', JSON.stringify(movieList));
+  }
+
+function populateMovieList() {
+    var movieList = JSON.parse(localStorage.getItem('movie-list')) || [];
+  
+    var selectedList = document.querySelector('.selected-list');
+  
+    movieList.forEach(function (title) {
+        var listItem = document.createElement('li');
+        listItem.textContent = title;
+        listItem.classList.add(
+            'flex',
+            'items-center',
+            'justify-between',
+            'bg-[#9DB2BF]',
+            'hover:bg-[#DDE6ED]',
+            'hover:cursor-pointer',
+            'mt-1',
+            'border',
+            'border-black',
+            'rounded-lg'
+        );
+        listItem.style.color = '#27374D';
+  
+        var removeButton = document.createElement('xButton');
+        removeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>`;
+  
+        removeButton.classList.add('text-[#27374D]');
+  
+        removeButton.addEventListener('click', function () {
+            event.stopPropagation();
+            listItem.remove();
+            removeFromMovieList();
+        });
+
+        listItem.addEventListener('click', function (){
+            window.location.href = 'sindex.html';
+        });
+  
+        listItem.appendChild(removeButton);
+  
+        selectedList.appendChild(listItem);
+    });
+}
+  
+populateMovieList();
